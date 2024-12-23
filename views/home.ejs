@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home page</title>
+  <style>
+    /* Common style for all elements */
+    label, input, button {
+      font-family: 'Arial', sans-serif;
+      font-size: 1rem;
+      margin: 10px 0;
+      display: block; /* Ensures each element is on a new line */
+    }
+  
+    /* Additional styles for specific elements */
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  
+    button {
+      background-color: black;
+      color: aliceblue;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    button:hover {
+      background-color: #444;
+    }
+
+    /* Styles for the generated URL */
+    .generated-url {
+      font-size: 1.2rem;
+      color: #007BFF;
+      margin-top: 15px;
+    }
+
+    .generated-url a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+
+    .generated-url a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>URL Shortener</h1>
+
+  <% if (locals.id) { %>
+    <div class="generated-url">
+      <p>URL Generated:</p>
+      <a href="http://localhost/url<%= id %>" target="_blank">http://localhost/url<%= id %></a>
+    </div>
+  <% } %>
+
+  <form action="/url" method="POST"> 
+    <label for="url">Enter Your Original URL</label>
+    <input type="text" placeholder="https://www.example.com" name="url" id="url" required>
+    <button type="submit">Generate</button> 
+  </form>
+</body>
+</html>

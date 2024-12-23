@@ -3,7 +3,48 @@ import handleGenerateNewUrl from '../controllers/url.js';
 import URL from '../schema/url.js';
 const router = express.Router();
 
-router.post('/', handleGenerateNewUrl);
+
+
+router.get('/', async (req, res) => {
+    const allUrls = await URL.find({});
+    
+    return res.render("home",{ 
+        urls: allUrls,
+    })
+
+})
+
+router.get('/:shortId', async (req, res) => {
+    const shortId = req.params.shortId;
+    console.log("WORKING");
+    
+    try {
+        const entry = await URL.findOneAndUpdate(
+            { shortId },
+            { 
+                $push: {
+                    visitHistory: {
+                        timestamp: Date.now(), 
+                    },
+                },
+            },
+            { new: true } // Return the updated document
+        );
+
+        if (!entry) {
+            return res.status(404).json({ error: "Short URL not found" });
+        }
+
+        // Optional: Log the redirect for analytics
+        console.log(`Redirecting to: ${entry.redirectURL}`);
+
+        // Redirect to the original URL
+        res.redirect(entry.redirectURL);
+    } catch (error) {
+        console.error("Error in short URL redirect:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 
 export default router;
