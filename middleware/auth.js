@@ -8,7 +8,7 @@ async function restrictToLoggedInUsersOnly(req, res, next) {
     if (!userUid) return res.redirect("/user/signin");
 
     // Fetch the user (await is required for async function)
-    const user = await getUser(userUid);
+    const user = getUser(userUid);
 
     // If user does not exist, redirect to signin
     if (!user) return res.redirect("/user/signin");
@@ -23,6 +23,6 @@ async function restrictToLoggedInUsersOnly(req, res, next) {
     console.error("Error in restrictToLoggedInUsersOnly middleware:", error);
     res.status(500).send("An error occurred. Please try again later.");
   }
-}
+};
 
 export default restrictToLoggedInUsersOnly;

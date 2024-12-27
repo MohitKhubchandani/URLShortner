@@ -1,5 +1,4 @@
 import User from "../schema/user.js";
-import { v4 as uuidv4 } from "uuid";
 import { setUser } from "../service/auth.js";
 
 async function handleUserSignUp(req, res) {
@@ -21,9 +20,8 @@ export async function handleUserSignIn(req, res) {
     return res.render("signin", { error: "Invalid credentials" });
   };
 
-  const sessionId = uuidv4();
-  setUser(sessionId, user);
-  res.cookie("uid", sessionId);
+  const token = setUser(user);
+  res.cookie("uid", token);
 
   return res.redirect("/url");
 };
