@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Short URL</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .url-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      word-wrap: break-word;
+    }
+
+    .url-box span {
+      flex-grow: 1;
+      color: #333;
+      overflow-wrap: anywhere;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Shortened URL</h1>
+    <div class="url-box">
+      <span id="shortUrl"><%= `http://localhost:8001/url/${shortID}` %></span>
+      <button onclick="copyToClipboard()">Copy</button>
+    </div>
+    <div class="footer">
+      <p>Share your link and track its performance!</p>
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard() {
+      const url = document.getElementById("shortUrl").innerText;
+      navigator.clipboard.writeText(url).then(() => {
+        alert("URL copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy URL.");
+      });
+    }
+  </script>
+</body>
+</html>

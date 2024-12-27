@@ -14,7 +14,7 @@ async function handleGenerateNewUrl(req, res) {
         visitHistory: []
     });
 
-    return res.json({id:shortID});
+    return res.render('shortUrl', { shortID });
 };
 
 export default handleGenerateNewUrl; 

@@ -1,14 +1,14 @@
 import express from 'express';
 import URL from '../schema/url.js';
+import handleGenerateNewUrl from '../controllers/url.js';
 const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-    const allUrls = await URL.find({});
-    
     return res.render("home")
-    
-})
+});
+
+router.post('/', handleGenerateNewUrl);
 
 router.get('/:shortId', async (req, res) => {
     const shortId = req.params.shortId;
@@ -35,7 +35,7 @@ router.get('/:shortId', async (req, res) => {
         console.log(`Redirecting to: ${entry.redirectURL}`);
 
         // Redirect to the original URL
-        res.redirect(entry.redirectURL);
+        return res.redirect(entry.redirectURL);
     } catch (error) {
         console.error("Error in short URL redirect:", error);
         res.status(500).json({ error: "Internal server error" });
